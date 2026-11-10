@@ -70,6 +70,8 @@ function writeMinimalProductionManifest(dist: string): void {
     name: 'test',
     version: '0.0.0',
     permissions: [
+      'activeTab',
+      'tabCapture',
       'storage',
       'tabs',
       'scripting',

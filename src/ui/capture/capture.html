@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>NijiLucid capture viewer</title></head>
+<body>
+  <header>
+    <h1>Experimental capture viewer</h1>
+    <p>Enhance a captured tab in this separate viewer. Use theater mode in the source tab and turn off its NijiLucid overlay. Capture includes the whole tab, including subtitles and controls.</p>
+    <p>Protected video may remain black. This does not decrypt video or guarantee DRM compatibility. Settings are read when capture starts. Nothing is recorded or uploaded.</p>
+    <button id="start">Start capture</button>
+    <button id="stop" disabled>Stop</button>
+    <button id="source">Show source tab</button>
+    <button id="fullscreen" disabled>Fullscreen</button>
+    <label><input id="original" type="checkbox"> Show unprocessed capture</label>
+    <label id="compositing-label" hidden><input id="compositing" type="checkbox"> Try experimental Crunchyroll overlay CSS (issue #4; may change colors)</label>
+    <p id="status" role="status">Ready. Keep the source tab playing.</p>
+  </header>
+  <main id="stage"><video id="video" muted playsinline></video><canvas id="output" hidden></canvas></main>
+</body>
+</html>
