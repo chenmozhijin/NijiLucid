@@ -24,6 +24,8 @@ const expectedManifestExposure = {
   hostPattern: '<all_urls>',
   webAccessibleResources: ['*.js'],
   permissions: [
+    'activeTab',
+    'tabCapture',
     'storage',
     'tabs',
     'scripting',
@@ -132,7 +134,10 @@ function validateManifestExposure(manifest, file = 'manifest.json') {
     findings.push({ file, token: 'unexpected host_permissions' });
   }
 
-  if (!sameStringSet(manifest.permissions, expected.permissions)) {
+  const permissions = manifest.browser_specific_settings?.gecko
+    ? expected.permissions.filter(permission => permission !== 'tabCapture' && permission !== 'activeTab')
+    : expected.permissions;
+  if (!sameStringSet(manifest.permissions, permissions)) {
     findings.push({ file, token: 'unexpected permissions' });
   }
 

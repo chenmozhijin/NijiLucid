@@ -3,6 +3,7 @@ import { ensureLatestConfig } from './utils/migration';
 import { createLogger } from './utils/logger';
 import type { LocalSettings } from './types';
 import { compareExtensionVersions } from './utils/extension-version';
+import { registerCaptureCompositing } from './features/capture-compositing';
 
 const RULESET_ID = 'ruleset_1';
 export const ONBOARDING_UPGRADE_VERSION = '0.5.0';
@@ -297,4 +298,5 @@ export function resetBackgroundBootstrapForTests(): void {
 
 if (!globalThis.__NIJILUCID_DISABLE_AUTO_BOOTSTRAP__) {
   registerBackgroundListeners();
+  if (typeof chrome.tabCapture?.getMediaStreamId === 'function') registerCaptureCompositing();
 }

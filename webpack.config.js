@@ -14,6 +14,7 @@ module.exports = (env, argv) => {
 
   // 据目标浏览器修改 manifest
   if (targetBrowser === 'firefox') {
+    manifest.permissions = manifest.permissions.filter(permission => permission !== 'tabCapture' && permission !== 'activeTab');
     // Firefox 特定的转换
     delete manifest.background.service_worker;
     manifest.background.scripts = ['background.js'];
@@ -34,7 +35,8 @@ module.exports = (env, argv) => {
       options: './src/ui/options/options.ts',
       onboarding: './src/ui/onboarding/onboarding.ts',
       content: './src/content.ts',
-      background: './src/background.ts'
+      background: './src/background.ts',
+      capture: './src/ui/capture/capture.ts'
     },
     output: {
       filename: '[name].js',
@@ -82,6 +84,11 @@ module.exports = (env, argv) => {
           { from: 'licenses', to: 'licenses' },
           { from: 'THIRD_PARTY_NOTICES.md' },
         ],
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'capture.html',
+        template: './src/ui/capture/capture.html',
+        chunks: ['capture'],
       }),
       new HtmlWebpackPlugin({
         filename: 'popup.html',

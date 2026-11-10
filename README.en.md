@@ -20,7 +20,17 @@ NijiLucid uses WebGPU to enhance anime video quality in real time, delivering a 
 - 🌐 **Internationalization Support:** Supports multiple languages including Chinese, English, Japanese, and Russian to serve global users.
 
 > [!WARNING]
-> This extension does not work on video websites with Encrypted Media Extensions (EME) or DRM protection, such as Netflix.
+> Direct video enhancement does not support Encrypted Media Extensions (EME) or DRM-protected video. The experimental capture viewer below can only enhance pixels the browser makes available; protected video may still be black.
+
+### Experimental capture viewer (Chrome / Edge)
+
+Open the extension popup **on the playing source tab**, then choose **Experimental capture viewer** and **Start capture**. The viewer uses the saved enhancement mode, performance tier, and resolution. Keep the source playing and use its theater mode where available. Disable any NijiLucid enhancement overlay in the source tab first.
+
+The enhanced picture appears in a separate tab so it cannot be captured recursively. **Show unprocessed capture** compares the incoming picture with the enhancement; **Fullscreen** expands the viewer. Audio remains in the source tab. Stop capture or close the viewer to release the stream and GPU resources. No video is recorded or uploaded.
+
+Capture includes the entire tab viewport, including controls, subtitles, and letterboxing. Its resolution is the captured viewport rather than the original encoded video. Settings changes take effect on the next capture start. Navigation can revoke the source tab grant; reopen the popup on the source if capture is denied. Firefox does not expose this feature or request its capture permissions.
+
+For Crunchyroll only, an opt-in checkbox tries the overlay `mix-blend-mode` CSS reported in [issue #4](https://github.com/chenmozhijin/NijiLucid/issues/4). This compositing experiment may change colors; it does not decrypt video or make protected video elements readable by WebGPU. The CSS is removed on Stop, viewer navigation, or viewer closure. The report is not evidence of compatibility with HIDIVE or other services. Verify both the raw capture and enhanced playback on the intended browser/site before claiming support.
 
 ## User Guide
 

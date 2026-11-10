@@ -20,6 +20,26 @@ let currentTier: PerformanceTier = 'balanced';
 const logger = createLogger('popup');
 
 document.addEventListener('DOMContentLoaded', async () => {
+  const captureButton = document.getElementById('open-capture') as HTMLButtonElement | null;
+  if (captureButton && typeof chrome.tabCapture?.getMediaStreamId === 'function') {
+    captureButton.hidden = false;
+    captureButton.addEventListener('click', async () => {
+      captureButton.disabled = true;
+      try {
+        const [source] = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (source?.id === undefined || !/^https?:\/\//.test(source.url || '')) {
+          throw new Error('Open a video website first.');
+        }
+        await chrome.tabs.create({
+          url: chrome.runtime.getURL(`capture.html?source=${source.id}`),
+        });
+      } catch (error) {
+        captureButton.textContent = error instanceof Error ? error.message : 'Unable to open capture viewer';
+      } finally {
+        captureButton.disabled = false;
+      }
+    });
+  }
   await themeManager.ready();
   document.documentElement.setAttribute('lang', chrome.i18n.getMessage('@@ui_locale'));
 

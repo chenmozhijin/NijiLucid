@@ -29,6 +29,8 @@
     }
   ],
   "permissions": [
+    "activeTab",
+    "tabCapture",
     "storage",
     "tabs",
     "scripting",
